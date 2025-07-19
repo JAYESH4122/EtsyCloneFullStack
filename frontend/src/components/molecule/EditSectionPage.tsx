@@ -4,7 +4,9 @@ import { useParams } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const EditSectionPage = () => {
   const { type } = useParams();
-  const [formData, setFormData] = useState<Record<string, unknown> | null>(null);
+  const [formData, setFormData] = useState<Record<string, unknown> | null>(
+    null
+  );
 
   useEffect(() => {
     axios
@@ -34,7 +36,10 @@ const EditSectionPage = () => {
     });
   };
 
-  const renderFields = (obj: Record<string, unknown>, path: string[] = []): JSX.Element[] => {
+  const renderFields = (
+    obj: Record<string, unknown>,
+    path: string[] = []
+  ): JSX.Element[] => {
     return Object.entries(obj).flatMap(([key, value]) => {
       const currentPath = [...path, key];
 
@@ -54,14 +59,27 @@ const EditSectionPage = () => {
           <fieldset key={currentPath.join(".")}>
             <legend>{currentPath.join(" > ")}</legend>
             {value.map((item, index) => (
-              <div key={index} style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }} className="arrayfields">
+              <div
+                key={index}
+                style={{
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                  marginBottom: "10px",
+                }}
+                className="arrayfields"
+              >
                 {typeof item === "object" && item !== null ? (
                   renderFields(item, [...currentPath, String(index)])
                 ) : (
                   <input
                     type="text"
                     value={String(item)}
-                    onChange={(e) => handleChange([...currentPath, String(index)], e.target.value)}
+                    onChange={(e) =>
+                      handleChange(
+                        [...currentPath, String(index)],
+                        e.target.value
+                      )
+                    }
                   />
                 )}
               </div>
@@ -86,7 +104,7 @@ const EditSectionPage = () => {
     if (!formData) return;
 
     axios
-      .put(`http://localhost:5000/api/sections/${type}`, {
+      .put(`${BASE_URL}/api/sections/${type}`, {
         content: formData,
       })
       .then(() => alert("Section updated successfully!"))
@@ -107,4 +125,3 @@ const EditSectionPage = () => {
 };
 
 export default EditSectionPage;
-
