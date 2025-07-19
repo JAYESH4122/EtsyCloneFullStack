@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { HeroSectionData } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const HeroSection = () => {
   const [heroSection, setHeroSection] = useState<HeroSectionData | null>(null);
@@ -9,18 +10,21 @@ const HeroSection = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/heroSection")
+      .get(`${BASE_URL}/api/sections/heroSection`)
       .then((res) => setHeroSection(res.data.content))
       .catch((error) => console.log("Error Fetching HeroSection", error));
   }, []);
-  
+
   if (!heroSection) return <div>Loading...</div>;
 
   return (
     <div>
-      <section className="hero-section-wrapper" onClick={() => {
-        navigate("/edit/heroSection");
-      }}>
+      <section
+        className="hero-section-wrapper"
+        onClick={() => {
+          navigate("/edit/heroSection");
+        }}
+      >
         <div className="hero-section-container">
           <div className="main-hero-section">
             <div className="hero-left-section">

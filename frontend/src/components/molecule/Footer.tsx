@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { FooterData } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const Footer = () => {
   const [footerData, setFooterData] = useState<FooterData | null>(null);
@@ -9,7 +10,7 @@ const Footer = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/footerSection")
+      .get(`${BASE_URL}/api/sections/footerSection`)
       .then((res) => setFooterData(res.data.content))
       .catch((error) => console.log("Error Fetching BlogData", error));
   }, []);
@@ -18,9 +19,12 @@ const Footer = () => {
 
   return (
     <>
-      <div className="footer-sub"       onClick={() => {
-        navigate("/edit/footerSection");
-      }}>
+      <div
+        className="footer-sub"
+        onClick={() => {
+          navigate("/edit/footerSection");
+        }}
+      >
         <div className="footer-sub-right-section">
           <div className="footer-sub-right-section-content-wrapper">
             <div className="right-section-content-column-one">

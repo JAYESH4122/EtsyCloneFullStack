@@ -3,6 +3,7 @@ import type { DiscoverShopsData, Shop } from "../../types/datatypes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL
 
 const DiscoverShops = () => {
   const [discoverShopsData, setDiscoverShopsData] =
@@ -12,7 +13,7 @@ const DiscoverShops = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/discoverShops")
+      .get(`${BASE_URL}}/api/sections/discoverShops`)
       .then((res) => setDiscoverShopsData(res.data.content))
       .catch((error) => console.log("Error Fetching BlogData", error));
   }, []);

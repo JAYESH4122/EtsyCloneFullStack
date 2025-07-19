@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import type { QuestionnaireData } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const QuestionnaireSection = () => {
   const [questionnaireData, setQuestionnaireData] =
     useState<QuestionnaireData | null>(null);
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/questionnaireSection")
+      .get(`${BASE_URL}/api/sections/questionnaireSection`)
       .then((res) => setQuestionnaireData(res.data.content))
       .catch((error) => console.log("Error Fetching HeroSection", error));
   }, []);
@@ -18,9 +19,12 @@ const QuestionnaireSection = () => {
   if (!questionnaireData) return <div>Loading...</div>;
 
   return (
-    <div className="questionare-section" onClick={() => {
-          navigate("/edit/questionnaireSection");
-        }}>
+    <div
+      className="questionare-section"
+      onClick={() => {
+        navigate("/edit/questionnaireSection");
+      }}
+    >
       <h2>{questionnaireData.mainTitle}</h2>
       <p className="subtitle">{questionnaireData.subtitle}</p>
       <div className="question-and-answers-section">
@@ -52,7 +56,9 @@ const QuestionnaireSection = () => {
       <div className="call-customer-care-section">
         <h3>{questionnaireData.helpSection.title}</h3>
         <div className="help-center-btn-wrapper">
-          <div className="help-center-btn">{questionnaireData.helpSection.buttonText}</div>
+          <div className="help-center-btn">
+            {questionnaireData.helpSection.buttonText}
+          </div>
         </div>
       </div>
     </div>

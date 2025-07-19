@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { BlogSectionData } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const FreshBlogSection = () => {
   const [blogData, setBlogData] = useState<BlogSectionData | null>(null);
@@ -9,7 +10,7 @@ const FreshBlogSection = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/blogSection")
+      .get(`${BASE_URL}/api/sections/blogSection`)
       .then((res) => setBlogData(res.data.content))
       .catch((error) => console.log("Error Fetching BlogData", error));
   }, []);

@@ -2,6 +2,7 @@ import axios from "axios";
 import type { HeaderData } from "../../types/datatypes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const Header = () => {
   const [header, setHeader] = useState<HeaderData | null>(null);
@@ -9,7 +10,7 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/header")
+      .get(`${BASE_URL}/api/sections/header`)
       .then((res) => setHeader(res.data.content))
       .catch((error) => console.log("Error Fetching HeroSection", error));
   }, []);

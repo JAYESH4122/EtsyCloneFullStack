@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { SaveNowData } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL
 
 const SaveNowSection = () => {
   const [saveNowData, setSaveNowData] = useState<SaveNowData | null>(null);
@@ -9,7 +10,7 @@ const SaveNowSection = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/saveNowSection")
+      .get(`${BASE_URL}/api/sections/saveNowSection`)
       .then((res) => setSaveNowData(res.data.content))
       .catch((error) => console.log("Error Fetching HeroSection", error));
   }, []);

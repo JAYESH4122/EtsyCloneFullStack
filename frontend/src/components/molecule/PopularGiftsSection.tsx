@@ -6,6 +6,7 @@ import type {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const PopularGiftsSection = () => {
   const [populargiftsSection, setPopulargiftsSection] =
@@ -15,7 +16,7 @@ const PopularGiftsSection = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/popularGiftsSectionData")
+      .get(`${BASE_URL}/api/sections/popularGiftsSectionData`)
       .then((res) => setPopulargiftsSection(res.data.content))
       .catch((error) => console.log("Error Fetching HeroSection", error));
   }, []);

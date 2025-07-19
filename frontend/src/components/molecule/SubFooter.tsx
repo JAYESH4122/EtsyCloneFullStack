@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { SubFooterData } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const SubFooter = () => {
   const [subfooterSection, setSubfooterSection] =
@@ -10,7 +11,7 @@ const SubFooter = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/subfooterSection")
+      .get(`${BASE_URL}/api/sections/subfooterSection`)
       .then((res) => setSubfooterSection(res.data.content))
       .catch((error) => console.log("Error in fetching subfooterdata", error));
   }, []);

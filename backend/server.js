@@ -7,15 +7,19 @@ import sectionRoutes from "./routes/sectionRoute.js";
 dotenv.config();
 connectDB();
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-}));
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",");
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use("/api/sections", sectionRoutes);
 
 const PORT = process.env.PORT || 5000;

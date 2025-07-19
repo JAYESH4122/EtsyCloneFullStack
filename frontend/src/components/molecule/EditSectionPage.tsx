@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useEffect, useState, type JSX } from "react";
 import { useParams } from "react-router-dom";
-
+const BASE_URL = import.meta.env.BACKEND_URL
 const EditSectionPage = () => {
   const { type } = useParams();
   const [formData, setFormData] = useState<Record<string, unknown> | null>(null);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/sections/${type}`)
+      .get(`${BASE_URL}/api/sections/${type}`)
       .then((res) => setFormData(res.data.content))
       .catch((err) => console.error("Failed to fetch section", err));
   }, [type]);

@@ -3,16 +3,17 @@ import type { PopularCardProps, PopularCategory } from "../../types/datatypes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.BACKEND_URL;
 
 const PopularCategorySection = () => {
   const [popularcategory, setPopularcategory] =
     useState<PopularCategory | null>(null);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sections/popularcategory")
+      .get(`${BASE_URL}/api/sections/popularcategory`)
       .then((res) => setPopularcategory(res.data.content))
       .catch((error) => console.log("Error Fetching HeroSection", error));
   }, []);
@@ -20,9 +21,11 @@ const PopularCategorySection = () => {
   if (!popularcategory) return <div>Loading...</div>;
 
   return (
-    <div onClick={() => {
+    <div
+      onClick={() => {
         navigate("/edit/popularcategory");
-      }}>
+      }}
+    >
       <div className="hp-spacing-small"></div>
       <div className="popular-category-container">
         <div className="popular-category-wrapper">
