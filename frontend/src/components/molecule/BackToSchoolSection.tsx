@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BackToSchoolCard from "../atom/BackToSchoolCard";
 import type { BackToSchoolSectionData } from "../../types/datatypes";
 import { useNavigate } from "react-router-dom";
-const BASE_URL = import.meta.env.BACKEND_URL
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const BackToSchoolSection = () => {
   const [backToSchool, setBackToSchool] = useState<BackToSchoolSectionData["backToSchool"] | null>(null);

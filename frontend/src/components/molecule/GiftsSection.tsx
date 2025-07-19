@@ -3,7 +3,7 @@ import type { GiftCategoryData, GiftCardProps } from "../../types/datatypes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-const BASE_URL = import.meta.env.BACKEND_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const GiftsSection = () => {
   const [giftCategory, setGiftCategory] = useState<GiftCategoryData | null>(

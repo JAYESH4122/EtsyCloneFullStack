@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, type JSX } from "react";
 import { useParams } from "react-router-dom";
-const BASE_URL = import.meta.env.BACKEND_URL
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const EditSectionPage = () => {
   const { type } = useParams();
   const [formData, setFormData] = useState<Record<string, unknown> | null>(null);

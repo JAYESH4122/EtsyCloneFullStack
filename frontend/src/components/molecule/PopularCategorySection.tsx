@@ -3,7 +3,7 @@ import type { PopularCardProps, PopularCategory } from "../../types/datatypes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const BASE_URL = import.meta.env.BACKEND_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const PopularCategorySection = () => {
   const [popularcategory, setPopularcategory] =
