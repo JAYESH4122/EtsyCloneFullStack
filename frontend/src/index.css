@@ -2488,8 +2488,8 @@ label {
   text-transform: capitalize;
 }
 
-
-.arrayfields,.field input[type="text"] {
+.arrayfields,
+.field input[type="text"] {
   width: 96%;
   padding: 0.75rem;
   border: 1px solid #e2e8f0;
@@ -2501,7 +2501,8 @@ label {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.arrayfields,.field input[type="text"]:focus {
+.arrayfields,
+.field input[type="text"]:focus {
   outline: none;
   border-color: #3182ce;
   box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
@@ -2600,7 +2601,7 @@ fieldset fieldset {
     padding: 1.5rem;
     margin: 1rem;
   }
-  
+
   .edit-section-page h1 {
     font-size: 1.25rem;
   }

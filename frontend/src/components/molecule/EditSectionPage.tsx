@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, type JSX } from "react";
 import { useParams } from "react-router-dom";
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+	const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const EditSectionPage = () => {
   const { type } = useParams();
   const [formData, setFormData] = useState<Record<string, unknown> | null>(
@@ -15,7 +15,7 @@ const EditSectionPage = () => {
       .catch((err) => console.error("Failed to fetch section", err));
   }, [type]);
 
-  const handleChange = (path: string[], value: string) => {
+	  const handleChange = (path: string[], value: string) => {
     setFormData((prevData) => {
       if (!prevData) return prevData;
 
@@ -46,7 +46,7 @@ const EditSectionPage = () => {
       if (typeof value === "string" || typeof value === "number") {
         return (
           <div key={currentPath.join(".")} className="field">
-            <label>{currentPath.join(" > ")}</label>
+            <label>{currentPath.join(" > ")}</label>	
             <input
               type="text"
               value={String(value)}
@@ -57,22 +57,17 @@ const EditSectionPage = () => {
       } else if (Array.isArray(value)) {
         return (
           <fieldset key={currentPath.join(".")}>
-            <legend>{currentPath.join(" > ")}</legend>
+            	<legend>{currentPath.join(" > ")}</legend>
             {value.map((item, index) => (
               <div
                 key={index}
-                style={{
-                  border: "1px solid #ccc",
-                  padding: "10px",
-                  marginBottom: "10px",
-                }}
                 className="arrayfields"
               >
                 {typeof item === "object" && item !== null ? (
                   renderFields(item, [...currentPath, String(index)])
                 ) : (
                   <input
-                    type="text"
+                    type="text"	
                     value={String(item)}
                     onChange={(e) =>
                       handleChange(
