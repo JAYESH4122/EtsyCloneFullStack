@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import type { QuestionnaireData } from "../../types/datatypes";
+import type { QuestionnaireData, SectionProps } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const QuestionnaireSection = () => {
+const QuestionnaireSection = ({ onLoaded }: SectionProps) => {
   const [questionnaireData, setQuestionnaireData] =
     useState<QuestionnaireData | null>(null);
   const navigate = useNavigate();
@@ -12,11 +12,14 @@ const QuestionnaireSection = () => {
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/questionnaireSection`)
-      .then((res) => setQuestionnaireData(res.data.content))
+      .then((res) => {
+        setQuestionnaireData(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching HeroSection", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!questionnaireData) return <div>Loading...</div>;
+  if (!questionnaireData) return null;
 
   return (
     <div

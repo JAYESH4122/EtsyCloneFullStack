@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
-import type { FooterData } from "../../types/datatypes";
+import type { FooterData, SectionProps } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const Footer = () => {
+const Footer = ({ onLoaded }: SectionProps) => {
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/footerSection`)
-      .then((res) => setFooterData(res.data.content))
+      .then((res) => {
+        setFooterData(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching BlogData", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!footerData) return <div>Loading...</div>;
+  if (!footerData) return null;
 
   return (
     <>

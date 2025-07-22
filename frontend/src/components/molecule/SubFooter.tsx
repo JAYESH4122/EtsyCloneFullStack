@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import type { SubFooterData } from "../../types/datatypes";
+import type { SectionProps, SubFooterData } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const SubFooter = () => {
+const SubFooter = ({ onLoaded }: SectionProps) => {
   const [subfooterSection, setSubfooterSection] =
     useState<SubFooterData | null>(null);
   const navigate = useNavigate();
@@ -12,11 +12,14 @@ const SubFooter = () => {
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/subfooterSection`)
-      .then((res) => setSubfooterSection(res.data.content))
+      .then((res) => {
+        setSubfooterSection(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error in fetching subfooterdata", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!subfooterSection) return <div>Loading...</div>;
+  if (!subfooterSection) return null;
 
   return (
     <div

@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
-import type { SaveNowData } from "../../types/datatypes";
+import type { SaveNowData, SectionProps } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const SaveNowSection = () => {
+const SaveNowSection = ({ onLoaded }: SectionProps) => {
   const [saveNowData, setSaveNowData] = useState<SaveNowData | null>(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/saveNowSection`)
-      .then((res) => setSaveNowData(res.data.content))
+      .then((res) => {
+        setSaveNowData(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching HeroSection", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!saveNowData) return <div>Loading...</div>;
+  if (!saveNowData) return null;
 
   return (
-    <div className="save-now-section" onClick={() => {
-          navigate("/edit/saveNowSection");
-        }}>
+    <div
+      className="save-now-section"
+      onClick={() => {
+        navigate("/edit/saveNowSection");
+      }}
+    >
       <div className="save-now-heading">
         <h2>{saveNowData.heading}</h2>
       </div>

@@ -213,3 +213,19 @@ export interface SectionFromDB {
   content: SectionContentMap[keyof SectionContentMap];
 }
 
+export type SectionProps = {
+  onLoaded: () => void;
+};
+
+export type ComponentNames =
+  | "header"
+  | "hero"
+  | "popularCategory"
+  | "gifts"
+  | "backToSchool"
+  | "saveNow"
+  | "discoverShops"
+  | "freshBlog"
+  | "questionaire"
+  | "subFooter"
+  | "footer";

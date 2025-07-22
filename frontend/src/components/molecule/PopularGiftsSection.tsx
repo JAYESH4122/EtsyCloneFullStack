@@ -2,13 +2,14 @@ import PopularGiftsCard from "../atom/PopularGiftsCard";
 import type {
   PopularGiftsSectionType,
   PopularGiftsCardProps,
+  SectionProps,
 } from "../../types/datatypes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const PopularGiftsSection = () => {
+const PopularGiftsSection = ({ onLoaded }: SectionProps) => {
   const [populargiftsSection, setPopulargiftsSection] =
     useState<PopularGiftsSectionType | null>(null);
 
@@ -17,11 +18,14 @@ const PopularGiftsSection = () => {
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/popularGiftsSectionData`)
-      .then((res) => setPopulargiftsSection(res.data.content))
+      .then((res) => {
+        setPopulargiftsSection(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching HeroSection", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!populargiftsSection) return <div>Loading...</div>;
+  if (!populargiftsSection) return null;
 
   return (
     <>

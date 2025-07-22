@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import type { BlogSectionData } from "../../types/datatypes";
+import type { BlogSectionData, SectionProps } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const FreshBlogSection = () => {
+const FreshBlogSection = ( { onLoaded }: SectionProps ) => {
   const [blogData, setBlogData] = useState<BlogSectionData | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/blogSection`)
-      .then((res) => setBlogData(res.data.content))
+      .then((res) => {setBlogData(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching BlogData", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!blogData) return <div>Loading...</div>;
+  if (!blogData) return null;
 
   return (
     <div

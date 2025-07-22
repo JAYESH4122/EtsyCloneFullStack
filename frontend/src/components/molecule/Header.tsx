@@ -1,21 +1,24 @@
 import axios from "axios";
-import type { HeaderData } from "../../types/datatypes";
+import type { HeaderData, SectionProps } from "../../types/datatypes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const Header = () => {
+const Header = ({ onLoaded }: SectionProps) => {
   const [header, setHeader] = useState<HeaderData | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/header`)
-      .then((res) => setHeader(res.data.content))
+      .then((res) => {
+        setHeader(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching HeroSection", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!header) return <div>Loading...</div>;
+  if (!header) return null;
 
   return (
     <div

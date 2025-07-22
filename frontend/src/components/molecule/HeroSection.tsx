@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
-import type { HeroSectionData } from "../../types/datatypes";
+import type { HeroSectionData, SectionProps } from "../../types/datatypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const HeroSection = () => {
+const HeroSection = ({ onLoaded }: SectionProps) => {
   const [heroSection, setHeroSection] = useState<HeroSectionData | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/heroSection`)
-      .then((res) => setHeroSection(res.data.content))
+      .then((res) => {
+        setHeroSection(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching HeroSection", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!heroSection) return <div>Loading...</div>;
+  if (!heroSection) return null;
 
   return (
     <div>

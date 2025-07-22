@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState, type JSX } from "react";
 import { useParams } from "react-router-dom";
-	const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+import { ClipLoader } from "react-spinners";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const EditSectionPage = () => {
   const { type } = useParams();
   const [formData, setFormData] = useState<Record<string, unknown> | null>(
@@ -15,13 +16,12 @@ const EditSectionPage = () => {
       .catch((err) => console.error("Failed to fetch section", err));
   }, [type]);
 
-	  const handleChange = (path: string[], value: string) => {
+  const handleChange = (path: string[], value: string) => {
     setFormData((prevData) => {
       if (!prevData) return prevData;
 
       const updated = { ...prevData };
       let current: Record<string, unknown> = updated;
-
       for (let i = 0; i < path.length - 1; i++) {
         const key = path[i];
         if (typeof current[key] !== "object" || current[key] === null) {
@@ -46,7 +46,7 @@ const EditSectionPage = () => {
       if (typeof value === "string" || typeof value === "number") {
         return (
           <div key={currentPath.join(".")} className="field">
-            <label>{currentPath.join(" > ")}</label>	
+            <label>{currentPath.join(" > ")}</label>
             <input
               type="text"
               value={String(value)}
@@ -57,17 +57,14 @@ const EditSectionPage = () => {
       } else if (Array.isArray(value)) {
         return (
           <fieldset key={currentPath.join(".")}>
-            	<legend>{currentPath.join(" > ")}</legend>
+            <legend>{currentPath.join(" > ")}</legend>
             {value.map((item, index) => (
-              <div
-                key={index}
-                className="arrayfields"
-              >
+              <div key={index} className="arrayfields">
                 {typeof item === "object" && item !== null ? (
                   renderFields(item, [...currentPath, String(index)])
                 ) : (
                   <input
-                    type="text"	
+                    type="text"
                     value={String(item)}
                     onChange={(e) =>
                       handleChange(
@@ -106,7 +103,12 @@ const EditSectionPage = () => {
       .catch((err) => console.error("Update failed", err));
   };
 
-  if (!formData) return <div>Loading...</div>;
+  if (!formData)
+    return (
+      <div className="overlay-loader">
+        <ClipLoader color="#ff6f61" size={70} speedMultiplier={1.2} />
+      </div>
+    );
 
   return (
     <div className="edit-section-page">

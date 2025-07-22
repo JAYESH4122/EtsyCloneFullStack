@@ -1,26 +1,39 @@
 import { useEffect, useState } from "react";
 import BackToSchoolCard from "../atom/BackToSchoolCard";
-import type { BackToSchoolSectionData } from "../../types/datatypes";
+import type {
+  BackToSchoolSectionData,
+  SectionProps,
+} from "../../types/datatypes";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const BackToSchoolSection = () => {
-  const [backToSchool, setBackToSchool] = useState<BackToSchoolSectionData["backToSchool"] | null>(null);
+const BackToSchoolSection = ({ onLoaded }: SectionProps) => {
+  const [backToSchool, setBackToSchool] = useState<
+    BackToSchoolSectionData["backToSchool"] | null
+  >(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/sections/backToSchool`)
       .then((res) => res.json())
-      .then((json) => setBackToSchool(json.content))
-      .catch((err) => console.error("Failed to load backToSchool section:", err));
-  }, []);
+      .then((json) => {
+        setBackToSchool(json.content);
+        onLoaded();
+      })
+      .catch((err) =>
+        console.error("Failed to load backToSchool section:", err)
+      );
+  }, [onLoaded]);
 
   if (!backToSchool) return null;
 
   return (
-    <div className="back-to-school-section" onClick={() => {
+    <div
+      className="back-to-school-section"
+      onClick={() => {
         navigate("/edit/backToSchool");
-      }}>
+      }}
+    >
       <div className="back-to-school-container">
         <div className="back-to-school-wrapper">
           <div className="row-one-column-first">

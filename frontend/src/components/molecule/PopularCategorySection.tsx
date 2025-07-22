@@ -1,11 +1,15 @@
 import PopularCard from "../atom/PopularCard";
-import type { PopularCardProps, PopularCategory } from "../../types/datatypes";
+import type {
+  PopularCardProps,
+  PopularCategory,
+  SectionProps,
+} from "../../types/datatypes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const PopularCategorySection = () => {
+const PopularCategorySection = ({ onLoaded }: SectionProps) => {
   const [popularcategory, setPopularcategory] =
     useState<PopularCategory | null>(null);
 
@@ -14,11 +18,14 @@ const PopularCategorySection = () => {
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/popularcategory`)
-      .then((res) => setPopularcategory(res.data.content))
+      .then((res) => {
+        setPopularcategory(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching HeroSection", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!popularcategory) return <div>Loading...</div>;
+  if (!popularcategory) return null;
 
   return (
     <div

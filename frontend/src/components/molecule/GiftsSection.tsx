@@ -1,11 +1,15 @@
 import GiftCard from "../atom/GiftCard";
-import type { GiftCategoryData, GiftCardProps } from "../../types/datatypes";
+import type {
+  GiftCategoryData,
+  GiftCardProps,
+  SectionProps,
+} from "../../types/datatypes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const GiftsSection = () => {
+const GiftsSection = ({ onLoaded }: SectionProps) => {
   const [giftCategory, setGiftCategory] = useState<GiftCategoryData | null>(
     null
   );
@@ -15,11 +19,14 @@ const GiftsSection = () => {
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/sections/giftCategory`)
-      .then((res) => setGiftCategory(res.data.content))
+      .then((res) => {
+        setGiftCategory(res.data.content);
+        onLoaded();
+      })
       .catch((error) => console.log("Error Fetching HeroSection", error));
-  }, []);
+  }, [onLoaded]);
 
-  if (!giftCategory) return <div>Loading...</div>;
+  if (!giftCategory) return null;
 
   return (
     <div
